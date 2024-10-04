@@ -9,7 +9,6 @@ This API is a tests task for the company Effective Mobile, and is a mini applica
 * **Create and edit products**
 * **Create and edit orders**
 """
-print(sys.path)
 tags_metadata = [
     {
         "name": "product",

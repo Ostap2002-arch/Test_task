@@ -1,18 +1,22 @@
-from dotenv import load_dotenv
-import os
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-load_dotenv(encoding='1251')
+class Settings(BaseSettings):
+    MODE: str
 
-DB_USERNAME = os.environ.get("DB_USERNAME")
-DB_PASSWORD =os.environ.get("DB_PASSWORD")
-DB_HOST =os.environ.get("DB_HOST")
-DB_PORT =os.environ.get("DB_PORT")
-DB_NAMEDB =os.environ.get("DB_NAMEDB")
+    DB_HOST: str
+    DB_PORT: int
+    DB_USER: str
+    DB_PASS: str
+    DB_NAME: str
+
+    @property
+    def DB_URL(self):
+        return f"postgresql://{self.DB_USER}:{self.DB_PASS}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+
+    model_config = SettingsConfigDict(env_file=".env")
 
 
-DB_USER_TEST = os.environ.get("DB_USER_TEST")
-DB_PASS_TEST = os.environ.get("DB_PASS_TEST")
-DB_HOST_TEST = os.environ.get("DB_HOST_TEST")
-DB_PORT_TEST = os.environ.get("DB_PORT_TEST")
-DB_NAME_TEST = os.environ.get("DB_NAME_TEST")
+settings = Settings()
+
+print(settings.DB_NAME, 'это точно название?')

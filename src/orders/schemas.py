@@ -1,10 +1,9 @@
 from datetime import datetime
 from enum import Enum
-from typing import Literal, List, Optional
+from typing import List, Optional
 from fastapi import Query
 from pydantic import BaseModel
 
-from src.products.utils import get_all_name_product
 
 
 class Order_Item(BaseModel):

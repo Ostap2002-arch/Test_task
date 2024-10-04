@@ -5,20 +5,21 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from src.config import DB_USERNAME, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAMEDB
-from src.orders.models import metadata as metadata_orders
-from src.products.models import metadata as metadata_products
+from src.database import metadata
+from src.config import settings
+# from src.orders.models import metadata as metadata_orders
+# from src.products.models import metadata as metadata_products
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
-
 section = config.config_ini_section
-config.set_section_option(section, "DB_USERNAME", DB_USERNAME)
-config.set_section_option(section, "DB_PASSWORD", DB_PASSWORD)
-config.set_section_option(section, "DB_HOST", DB_HOST)
-config.set_section_option(section, "DB_PORT", DB_PORT)
-config.set_section_option(section, "DB_NAMEDB", DB_NAMEDB)
+
+config.set_section_option(section, "DB_USER", str(settings.DB_USER))
+config.set_section_option(section, "DB_PASS", str(settings.DB_PASS))
+config.set_section_option(section, "DB_HOST", str(settings.DB_HOST))
+config.set_section_option(section, "DB_PORT", str(settings.DB_PORT))
+config.set_section_option(section, "DB_NAME", str(settings.DB_NAME))
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
@@ -29,7 +30,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = metadata_products
+target_metadata = metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

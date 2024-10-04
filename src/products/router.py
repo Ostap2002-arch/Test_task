@@ -3,6 +3,8 @@ from typing import List
 from fastapi.responses import Response
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy import select, insert, update, delete
+from sqlalchemy.orm import Session
+
 from src.database import get_session
 from src.products.models import product
 from src.products.schemas import Products, Change_product
@@ -24,10 +26,11 @@ def show_all_products(session = Depends(get_session)):
 
 @router.post('/', tags=['CRUD_product'], description="Creating a new product")
 def create_product(new_product: Products, session = Depends(get_session)):
-    stmt = insert(product).values(**new_product.dict())
-    session.execute(stmt)
+    stmt = insert(product).values(**new_product.dict()).returning(product)
+    result = session.execute(stmt)
+    id = result.fetchone().id
     session.commit()
-    return Response(content="The product has been added", media_type="text/plain", status_code=201)
+    return Response(content=f"The product has been added, number {id}", media_type="text/plain", status_code=201)
 
 
 @router.get('/{id}/', response_model=Products, tags=['product'], description = "Getting information about a product by its id")

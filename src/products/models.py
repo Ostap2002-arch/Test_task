@@ -1,6 +1,6 @@
-from sqlalchemy import MetaData, Table, Column, Integer, Float, String, Text, DateTime, ForeignKey
+from sqlalchemy import  Table, Column, Integer, Float, String, Text
 
-metadata = MetaData()
+from src.database import metadata
 
 product = Table(
     'product',

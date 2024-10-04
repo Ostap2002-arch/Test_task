@@ -1,10 +1,11 @@
 import datetime
 import os
 import sys
+from sqlalchemy import Table, Column, Integer,  String,  DateTime, ForeignKey
+from src.database import metadata
 
-from sqlalchemy import MetaData, Table, Column, Integer, Float, String, Text, DateTime, ForeignKey
 sys.path.append(os.path.abspath('./'))
-from src.products.models import metadata
+
 
 order = Table(
     'order',
