@@ -1,0 +1,28 @@
+name: market-2
+services:
+  db:
+    image: postgres:latest
+    container_name: db_app
+    env_file:
+      - .env-non-dev
+    volumes:
+      - pgdbdata:/var/lib/postgresql/data/
+  app:
+    build:
+      context: .
+    env_file:
+      - .env-non-dev
+    container_name: market_app
+    command: ['/market/docker/app.sh']
+    ports:
+      - 8001:8000
+    depends_on:
+      - db
+    volumes:
+      - .:/market
+volumes:
+  pgdbdata: null
+
+
+
+
